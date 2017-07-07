@@ -4,6 +4,7 @@ import org.launchcode.models.Category;
 import org.launchcode.models.Cheese;
 import org.launchcode.models.data.CategoryDao;
 import org.launchcode.models.data.CheeseDao;
+import org.launchcode.models.data.MenuDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 /**
  * Created by LaunchCode
@@ -28,12 +30,26 @@ public class CheeseController {
     @Autowired
     private CategoryDao categoryDao;
 
+    @Autowired
+    private MenuDao menuDao;
+
+/////////////////////////////////////////////////////////////////////////
+
     // Request path: /cheese
     @RequestMapping(value = "")
     public String index(Model model) {
 
         model.addAttribute("cheeses", cheeseDao.findAll());
         model.addAttribute("title", "My Cheeses");
+
+        return "cheese/index";
+    }
+
+    @RequestMapping(value = "category")
+    public String category(Model model, int id) {
+        Category theCategory = categoryDao.findOne(id);
+
+
 
         return "cheese/index";
     }
